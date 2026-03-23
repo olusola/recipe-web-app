@@ -2,6 +2,8 @@
 
 A recipe app built with Next.js. It allows users to manage a library of recipes and ingredients - creating, editing, deleting, searching, filtering, and discovering new recipes through a built-in recommendation engine.
 
+**[Live Demo](https://recipe-web-app-ashen.vercel.app/recipes)**
+
 ---
 
 ## Table of Contents
