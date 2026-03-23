@@ -5,16 +5,37 @@
     { "id": "ing3", "name": "Eggs", "unit": "pieces", "category": "Dairy" },
     { "id": "ing4", "name": "Milk", "unit": "ml", "category": "Dairy" },
     { "id": "ing5", "name": "Butter", "unit": "grams", "category": "Dairy" },
-    { "id": "ing6", "name": "Salt", "unit": "teaspoons", "category": "Seasoning" },
-    { "id": "ing7", "name": "Baking Powder", "unit": "teaspoons", "category": "Baking" },
-    { "id": "ing8", "name": "Vanilla Extract", "unit": "teaspoons", "category": "Flavoring" },
+    {
+      "id": "ing6",
+      "name": "Salt",
+      "unit": "teaspoons",
+      "category": "Seasoning"
+    },
+    {
+      "id": "ing7",
+      "name": "Baking Powder",
+      "unit": "teaspoons",
+      "category": "Baking"
+    },
+    {
+      "id": "ing8",
+      "name": "Vanilla Extract",
+      "unit": "teaspoons",
+      "category": "Flavoring"
+    },
     { "id": "ing9", "name": "Olive Oil", "unit": "ml", "category": "Oil" },
-    { "id": "ing10", "name": "Tomato", "unit": "pieces", "category": "Vegetable" }
+    {
+      "id": "ing10",
+      "name": "Tomato",
+      "unit": "pieces",
+      "category": "Vegetable"
+    }
   ],
   "recipes": [
     {
       "id": "rec1",
       "name": "Pancakes",
+      "instructions": "Whisk dry ingredients together. Mix wet ingredients separately, then combine. Cook on a buttered pan over medium heat until golden on both sides.",
       "ingredients": [
         { "ingredientId": "ing1", "quantity": 200 },
         { "ingredientId": "ing2", "quantity": 50 },
@@ -29,6 +50,7 @@
     {
       "id": "rec2",
       "name": "Scrambled Eggs",
+      "instructions": "Beat eggs with salt. Melt butter in a pan over medium-low heat, pour in eggs, and gently stir until softly set. Serve immediately.",
       "ingredients": [
         { "ingredientId": "ing3", "quantity": 3 },
         { "ingredientId": "ing5", "quantity": 20 },
@@ -38,6 +60,7 @@
     {
       "id": "rec3",
       "name": "Tomato Salad",
+      "instructions": "Cut tomatoes into wedges. Drizzle with olive oil, season with salt, and toss gently. Serve fresh or chilled.",
       "ingredients": [
         { "ingredientId": "ing10", "quantity": 2 },
         { "ingredientId": "ing9", "quantity": 30 },

@@ -73,6 +73,7 @@ export const useUpdateRecipe = (recipeId: string) => {
     mutationFn: (data: { name: string; ingredients: RecipeIngredientType[] }) =>
       updateRecipe(recipeId, data),
     onSuccess: () => {
+      toast.success('Recipe updated');
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.recipes });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.recipe(recipeId),
