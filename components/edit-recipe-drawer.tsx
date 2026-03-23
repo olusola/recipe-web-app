@@ -37,39 +37,65 @@ export const EditRecipeDrawer = ({
   open,
   onOpenChange,
 }: EditRecipeDrawerProps) => {
-  return (
-    <Drawer direction="right" open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="sm:max-w-lg">
-        <DrawerHeader>
-          <DrawerTitle className="text-2xl font-extrabold tracking-tight">
-            Edit Recipe
-          </DrawerTitle>
-          <DrawerDescription className="text-xs font-bold tracking-widest text-foreground/40 uppercase">
-            Update the recipe details below.
-          </DrawerDescription>
-        </DrawerHeader>
+  const router = useRouter()
+  const deleteMutation = useDeleteRecipe()
+  const [pendingDelete, setPendingDelete] = useState(false)
 
-        <EditRecipeForm
-          key={recipe.id}
-          recipe={recipe}
-          onClose={() => onOpenChange(false)}
-        />
-      </DrawerContent>
-    </Drawer>
+  const handleClose = () => onOpenChange(false)
+
+  return (
+    <>
+      <Drawer direction="right" open={open} onOpenChange={onOpenChange}>
+        <DrawerContent className="sm:max-w-lg">
+          <DrawerHeader>
+            <DrawerTitle className="text-2xl font-extrabold tracking-tight">
+              Edit Recipe
+            </DrawerTitle>
+            <DrawerDescription className="text-xs font-bold tracking-widest text-foreground/40 uppercase">
+              Update the recipe details below.
+            </DrawerDescription>
+          </DrawerHeader>
+
+          <EditRecipeForm
+            key={recipe.id}
+            recipe={recipe}
+            onClose={handleClose}
+            onRequestDelete={() => setPendingDelete(true)}
+            isDeleting={deleteMutation.isPending}
+          />
+        </DrawerContent>
+      </Drawer>
+
+      <ConfirmDeleteDialog
+        open={pendingDelete}
+        onOpenChange={(o) => !o && setPendingDelete(false)}
+        title="Delete recipe"
+        description={`Are you sure you want to delete \u201c${recipe.name}\u201d? This action cannot be undone.`}
+        onConfirm={() => {
+          deleteMutation.mutate(recipe.id, {
+            onSuccess: () => {
+              handleClose()
+              router.push("/recipes")
+            },
+          })
+        }}
+      />
+    </>
   )
 }
 
 const EditRecipeForm = ({
   recipe,
   onClose,
+  onRequestDelete,
+  isDeleting,
 }: {
   recipe: RecipeWithIngredientsType
   onClose: () => void
+  onRequestDelete: () => void
+  isDeleting: boolean
 }) => {
-  const router = useRouter()
   const mutation = useUpdateRecipe(recipe.id)
-  const deleteMutation = useDeleteRecipe()
-  const [pendingDelete, setPendingDelete] = useState(false)
 
   const {
     recipeName,
@@ -174,8 +200,8 @@ const EditRecipeForm = ({
           <Button
             type="button"
             variant="outline"
-            onClick={() => setPendingDelete(true)}
-            disabled={deleteMutation.isPending}
+            onClick={onRequestDelete}
+            disabled={isDeleting}
             className="h-10 rounded-full px-5 font-bold"
           >
             <Trash2 className="h-4 w-4" />
@@ -183,21 +209,6 @@ const EditRecipeForm = ({
           </Button>
         </div>
       </div>
-
-      <ConfirmDeleteDialog
-        open={pendingDelete}
-        onOpenChange={(open) => !open && setPendingDelete(false)}
-        title="Delete recipe"
-        description={`Are you sure you want to delete \u201c${recipe.name}\u201d? This action cannot be undone.`}
-        onConfirm={() => {
-          deleteMutation.mutate(recipe.id, {
-            onSuccess: () => {
-              onClose()
-              router.push("/recipes")
-            },
-          })
-        }}
-      />
 
       <DrawerFooter>
         <Button

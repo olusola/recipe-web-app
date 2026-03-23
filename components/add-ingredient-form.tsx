@@ -38,7 +38,7 @@ export const AddIngredientForm = () => {
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
-      className="flex flex-wrap items-start gap-2 rounded-2xl bg-card p-4"
+      className="flex flex-col items-start gap-2 rounded-2xl bg-card p-4 sm:flex-row sm:flex-wrap"
     >
       <Field className="min-w-0 flex-2">
         <Input

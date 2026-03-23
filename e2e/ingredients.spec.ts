@@ -39,9 +39,9 @@ test("adds a new ingredient via the inline form", async ({ page }) => {
   // Wait for the success toast to confirm the mutation settled
   await page.getByText("Ingredient added").waitFor()
   // New ingredient may land on page 2 due to pagination (pageSize=7, 10 seed items)
-  // Search for it to confirm it exists
+  // Search for it to confirm it exists — allow time for the background refetch
   await page.getByPlaceholder(/search/i).fill("Cinnamon")
-  await expect(page.getByText("Cinnamon")).toBeVisible()
+  await expect(page.getByText("Cinnamon").first()).toBeVisible()
 })
 
 test("prevents deleting an ingredient used in a recipe", async ({ page }) => {
