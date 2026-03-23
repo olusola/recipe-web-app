@@ -25,7 +25,9 @@ export default function RecipeDetailPage() {
 
   if (isLoading) {
     return (
-      <p className="py-8 text-center text-muted-foreground">Loading recipe…</p>
+      <p className="animate-pulse py-12 text-center text-sm text-muted-foreground">
+        Loading recipe…
+      </p>
     )
   }
 
@@ -44,7 +46,10 @@ export default function RecipeDetailPage() {
 
   return (
     <div className="space-y-8">
-      <HeroBanner src={HERO_IMAGE} className="min-h-[240px] justify-between sm:min-h-[280px]">
+      <HeroBanner
+        src={HERO_IMAGE}
+        className="min-h-[240px] justify-between sm:min-h-[280px]"
+      >
         <Button
           asChild
           variant="ghost"

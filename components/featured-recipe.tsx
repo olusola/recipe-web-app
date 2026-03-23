@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRecipes } from "@/hooks/use-recipes"
 import { Badge } from "@/components/ui/badge"
+import { Skeleton } from "@/components/ui/skeleton"
 
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1547573854-74d2a71d0826?w=1200&q=80&auto=format&fit=crop"
@@ -11,7 +12,25 @@ const HERO_IMAGE =
 export const FeaturedRecipe = () => {
   const { data: recipes = [], isLoading } = useRecipes()
 
-  if (isLoading || recipes.length === 0) return null
+  if (isLoading) {
+    return (
+      <div className="overflow-hidden rounded-2xl bg-muted">
+        <div className="flex min-h-[280px] flex-col justify-end p-6 sm:min-h-[320px] sm:p-8">
+          <div className="space-y-3">
+            <Skeleton className="h-6 w-32 rounded-full bg-muted-foreground/10" />
+            <Skeleton className="h-10 w-64 bg-muted-foreground/10" />
+            <div className="flex gap-1.5">
+              <Skeleton className="h-5 w-16 rounded-full bg-muted-foreground/10" />
+              <Skeleton className="h-5 w-20 rounded-full bg-muted-foreground/10" />
+              <Skeleton className="h-5 w-14 rounded-full bg-muted-foreground/10" />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (recipes.length === 0) return null
 
   const latest = recipes[recipes.length - 1]
 

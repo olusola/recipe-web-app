@@ -37,6 +37,13 @@ export default function RootLayout({
           <main className="mx-auto w-full max-w-3xl flex-1 px-4 pt-20 pb-6 sm:pt-24">
             {children}
           </main>
+          <footer className="mt-auto border-t py-6">
+            <div className="mx-auto max-w-3xl px-4">
+              <p className="text-center text-xs font-medium tracking-wide text-muted-foreground/60">
+                Recipe App &middot; Built with Next.js
+              </p>
+            </div>
+          </footer>
           <Toaster />
         </Providers>
       </body>

@@ -18,11 +18,19 @@ import {
   MAX_VISIBLE_INGREDIENTS,
   SECTION_LABEL,
 } from "@/lib/constants"
+import { Skeleton } from "@/components/ui/skeleton"
 import type { RecipeWithIngredientsType } from "@/lib/types"
 import { EditRecipeDrawer } from "@/components/edit-recipe-drawer"
 import { PaginationControls } from "@/components/pagination-controls"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
 import { Input } from "@/components/ui/input"
 
 const columnHelper = createColumnHelper<RecipeWithIngredientsType>()
@@ -61,15 +69,41 @@ export const RecipesTable = () => {
 
   if (isLoading) {
     return (
-      <p className="py-8 text-center text-muted-foreground">Loading recipes…</p>
+      <div className="space-y-4">
+        <Skeleton className="h-14 w-full rounded-full sm:h-16" />
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div
+            key={i}
+            className="flex flex-col gap-2 rounded-2xl border bg-card px-4 py-3.5 sm:grid sm:grid-cols-[180px_1fr_88px_20px] sm:items-center sm:gap-4 sm:px-5 sm:py-4"
+          >
+            <Skeleton className="h-5 w-32" />
+            <div className="flex gap-1.5">
+              <Skeleton className="h-5 w-16 rounded-full" />
+              <Skeleton className="h-5 w-20 rounded-full" />
+              <Skeleton className="h-5 w-14 rounded-full" />
+            </div>
+            <Skeleton className="hidden h-5 w-16 sm:block" />
+            <div />
+          </div>
+        ))}
+      </div>
     )
   }
 
   if (recipes.length === 0) {
     return (
-      <p className="py-8 text-center text-muted-foreground">
-        No recipes yet. Add one to get started.
-      </p>
+      <Empty className="min-h-60 border">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <Search className="h-5 w-5" />
+          </EmptyMedia>
+          <EmptyTitle>No recipes yet</EmptyTitle>
+          <EmptyDescription>
+            Create your first recipe to get started. You can add ingredients,
+            instructions, and more.
+          </EmptyDescription>
+        </EmptyHeader>
+      </Empty>
     )
   }
 

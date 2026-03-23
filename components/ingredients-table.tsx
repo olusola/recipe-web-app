@@ -2,7 +2,7 @@
 "use no memo"
 
 import { useState, useMemo } from "react"
-import { Search, Trash2, Info } from "lucide-react"
+import { Search, Trash2 } from "lucide-react"
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -14,6 +14,7 @@ import {
 import { useDeleteIngredient, useIngredients } from "@/hooks/use-ingredients"
 import { useRecipes } from "@/hooks/use-recipes"
 import { PAGE_SIZE, SECTION_LABEL } from "@/lib/constants"
+import { Skeleton } from "@/components/ui/skeleton"
 import type { IngredientType, RecipeWithIngredientsType } from "@/lib/types"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -21,6 +22,11 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { ConfirmDeleteDialog } from "@/components/confirm-delete-dialog"
 import { Input } from "@/components/ui/input"
 import { PaginationControls } from "@/components/pagination-controls"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const columnHelper = createColumnHelper<IngredientType>()
 
@@ -101,9 +107,24 @@ export const IngredientsTable = ({
 
   if (isLoading) {
     return (
-      <p className="py-8 text-center text-muted-foreground">
-        Loading ingredients…
-      </p>
+      <div className="space-y-4">
+        <Skeleton className="h-14 w-full rounded-full sm:h-16" />
+        <div className="flex gap-2">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Skeleton key={i} className="h-8 w-20 rounded-full" />
+          ))}
+        </div>
+        <div className="overflow-hidden rounded-2xl bg-card">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="flex items-center gap-3 border-b px-4 py-4">
+              <Skeleton className="h-4 w-4 rounded" />
+              <Skeleton className="h-4 flex-1" />
+              <Skeleton className="h-5 w-12 rounded-full" />
+              <Skeleton className="h-5 w-16 rounded-full" />
+            </div>
+          ))}
+        </div>
+      </div>
     )
   }
 
@@ -244,20 +265,21 @@ export const IngredientsTable = ({
                       {ing.category}
                     </Badge>
                     {inUse ? (
-                      <span className="group/tip relative flex items-center">
-                        <Button
-                          variant="ghost"
-                          size="icon-sm"
-                          disabled
-                          aria-label={`Cannot delete ${ing.name} — used in a recipe`}
-                        >
-                          <Trash2 className="h-4 w-4 text-muted-foreground/40" />
-                        </Button>
-                        <span className="pointer-events-none absolute right-full mr-1 hidden rounded-md bg-foreground px-2 py-1 text-[11px] font-medium whitespace-nowrap text-background opacity-0 transition-opacity group-hover/tip:opacity-100 sm:block">
-                          Used in a recipe
-                        </span>
-                        <Info className="h-3 w-3 text-muted-foreground/50 sm:hidden" />
-                      </span>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span tabIndex={0} className="inline-flex">
+                            <Button
+                              variant="ghost"
+                              size="icon-sm"
+                              disabled
+                              aria-label={`Cannot delete ${ing.name} — used in a recipe`}
+                            >
+                              <Trash2 className="h-4 w-4 text-muted-foreground/40" />
+                            </Button>
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent>Used in a recipe</TooltipContent>
+                      </Tooltip>
                     ) : (
                       <Button
                         variant="ghost"

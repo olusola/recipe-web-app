@@ -10,7 +10,7 @@ test("redirects home to /recipes", async ({ page }) => {
   await expect(page).toHaveURL("/recipes")
 })
 
-test("shows seeded recipes in the list", async ({ page }) => {
+test("shows existing recipes in the list", async ({ page }) => {
   await page.goto("/recipes")
   await expect(page.getByText("Pancakes").first()).toBeVisible()
   await expect(page.getByText("Scrambled Eggs").first()).toBeVisible()

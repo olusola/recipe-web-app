@@ -55,8 +55,10 @@ beforeEach(() => {
 describe("IngredientsTable", () => {
   it("renders a loading state initially", () => {
     mockFetchIngredients.mockReturnValue(new Promise(() => {})) // never resolves
-    renderWithProviders(<IngredientsTable {...defaultTableProps} />)
-    expect(screen.getByText(/loading ingredients/i)).toBeInTheDocument()
+    const { container } = renderWithProviders(
+      <IngredientsTable {...defaultTableProps} />
+    )
+    expect(container.querySelector(".animate-pulse")).toBeInTheDocument()
   })
 
   it("renders all ingredients in the table", async () => {

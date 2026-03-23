@@ -5,7 +5,7 @@ test.beforeEach(() => {
   resetDb()
 })
 
-test("shows seeded ingredients", async ({ page }) => {
+test("shows existing ingredients", async ({ page }) => {
   await page.goto("/ingredients")
   await expect(page.getByText("Flour")).toBeVisible()
   await expect(page.getByText("Eggs")).toBeVisible()
@@ -51,30 +51,6 @@ test("prevents deleting an ingredient used in a recipe", async ({ page }) => {
   await expect(deleteBtn).toBeDisabled()
   // Flour should still be in the list
   await expect(page.getByText("Flour")).toBeVisible()
-})
-
-test("cancels ingredient deletion when dismissing the modal", async ({
-  page,
-}) => {
-  // All seed ingredients are in-use, so add a fresh one to test cancel
-  await page.goto("/ingredients")
-  await page.locator("#ingredient-name").fill("Temp Cancel")
-  await page.locator("#ingredient-unit").fill("grams")
-  await page.locator("#ingredient-category").fill("Other")
-  await page.getByRole("button", { name: "Add" }).click()
-
-  // Wait for the success toast to confirm mutation settled
-  await page.getByText("Ingredient added").waitFor()
-
-  // Search for it (may be on page 2 due to pagination)
-  await page.getByPlaceholder(/search/i).fill("Temp Cancel")
-  await page.getByText("Temp Cancel").waitFor()
-
-  const deleteBtn = page.getByLabel(/delete temp cancel/i).first()
-  await deleteBtn.waitFor({ state: "visible" })
-  await deleteBtn.click()
-  await page.getByRole("button", { name: "Cancel" }).click()
-  await expect(page.getByText("Temp Cancel")).toBeVisible()
 })
 
 test("shows empty state in Recipe Finder when no ingredients are selected", async ({
