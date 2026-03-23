@@ -1,6 +1,6 @@
 # Recipe App
 
-A recipe app built with Next.js. It allows users to manage a library of recipes and ingredients — creating, editing, deleting, searching, filtering, and discovering new recipes through a built-in recommendation engine.
+A recipe app built with Next.js. It allows users to manage a library of recipes and ingredients - creating, editing, deleting, searching, filtering, and discovering new recipes through a built-in recommendation engine.
 
 ---
 
@@ -14,8 +14,8 @@ A recipe app built with Next.js. It allows users to manage a library of recipes 
 - [Project Structure](#project-structure)
 - [API Reference](#api-reference)
 - [State Management](#state-management)
-- [Unit and Integration Tests — Jest](#unit-and-integration-tests--jest)
-- [End-to-End Tests — Playwright](#end-to-end-tests--playwright)
+- [Unit and Integration Tests - Jest](#unit-and-integration-tests--jest)
+- [End-to-End Tests - Playwright](#end-to-end-tests--playwright)
 - [Design Decisions](#design-decisions)
 - [Assumptions](#assumptions)
 - [Experience](#experience)
@@ -40,7 +40,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser. The app red
 ```bash
 # Unit & integration tests (Jest)
 pnpm test             # Run all tests once
-pnpm test:watch       # Watch mode — re-runs on file changes
+pnpm test:watch       # Watch mode - re-runs on file changes
 pnpm test:coverage    # Run with coverage report
 
 # End-to-end tests (Playwright)
@@ -55,29 +55,29 @@ pnpm test:e2e:report  # View the last HTML test report
 
 ### Recipes
 
-- **List & Search** — View all recipes in a paginated table with search by name.
-- **Create** — Add a new recipe with a name, instructions, and one or more ingredients (each with a quantity).
-- **Edit** — Modify any recipe's name, ingredients, or instructions from a non-intrusive side drawer — no page navigation required.
-- **Delete** — Remove recipes via a confirmation modal to prevent accidental deletion.
-- **Detail View** — View a recipe's full details including ingredients and instructions
-- **Recommendations** — On the recipe detail page, the app suggests other recipes that share the most ingredients with the current one.
-- **Featured Recipe** — The recipes page highlights the latest recipe in a banner, giving it visual prominence and a quick link to its detail page.
+- **List & Search** - View all recipes in a paginated table with search by name.
+- **Create** - Add a new recipe with a name, instructions, and one or more ingredients (each with a quantity).
+- **Edit** - Modify any recipe's name, ingredients, or instructions from a non-intrusive side drawer - no page navigation required.
+- **Delete** - Remove recipes via a confirmation modal to prevent accidental deletion.
+- **Detail View** - View a recipe's full details including ingredients and instructions
+- **Recommendations** - On the recipe detail page, the app suggests other recipes that share the most ingredients with the current one.
+- **Featured Recipe** - The recipes page highlights the latest recipe in a banner, giving it visual prominence and a quick link to its detail page.
 
 ### Ingredients
 
-- **List & Search** — View all ingredients in a paginated table with search and category-based filtering.
-- **Create** — Add ingredients with a name, unit (e.g. "grams", "cups"), and category (e.g. "produce", "dairy").
-- **Delete with Guard** — Attempting to delete an ingredient that is referenced by one or more existing recipes returns an error. This prevents dangling data and broken recipe integrity.
-- **Optimistic Updates** — When adding an ingredient, the UI updates instantly before the server confirms — making the experience feel immediate and snappy.
-- **Recipe Finder** — Select one or more ingredients from the list and a side panel instantly shows which recipes you can make with them. Each result highlights which of the recipe's ingredients you have selected. Recipes where every ingredient is selected are promoted with a filled badge so they stand out.
+- **List & Search** - View all ingredients in a paginated table with search and category-based filtering.
+- **Create** - Add ingredients with a name, unit (e.g. "grams", "cups"), and category (e.g. "produce", "dairy").
+- **Delete with Guard** - Attempting to delete an ingredient that is referenced by one or more existing recipes returns an error. This prevents dangling data and broken recipe integrity.
+- **Optimistic Updates** - When adding an ingredient, the UI updates instantly before the server confirms - making the experience feel immediate and snappy.
+- **Recipe Finder** - Select one or more ingredients from the list and a side panel instantly shows which recipes you can make with them. Each result highlights which of the recipe's ingredients you have selected. Recipes where every ingredient is selected are promoted with a filled badge so they stand out.
 
 ### General
 
-- **Validation** — Forms validate on both the client (before submission) and server (in the API handler), ensuring data integrity at every boundary.
-- **Toast notifications** — Success and error feedback delivered via Sonner toasts without interrupting the user's flow.
-- **Responsive design** — Mobile-first layout using Tailwind CSS and shadcn/ui components, adapting cleanly across phone, tablet, and desktop viewports.
-- **Light & Dark theme** — Toggle between light and dark mode via a header button or the `D` keyboard shortcut. Dark mode uses a warm slate-blue background for a refined, eye-friendly feel.
-- **Emerald primary colour** — A vibrant emerald green is used as the primary colour across both themes, giving buttons and interactive elements strong visual identity.
+- **Validation** - Forms validate on both the client (before submission) and server (in the API handler), ensuring data integrity at every boundary.
+- **Toast notifications** - Success and error feedback delivered via Sonner toasts without interrupting the user's flow.
+- **Responsive design** - Mobile-first layout using Tailwind CSS and shadcn/ui components, adapting cleanly across phone, tablet, and desktop viewports.
+- **Light & Dark theme** - Toggle between light and dark mode via a header button or the `D` keyboard shortcut. Dark mode uses a warm slate-blue background for a refined, eye-friendly feel.
+- **Emerald primary colour** - A vibrant emerald green is used as the primary colour across both themes, giving buttons and interactive elements strong visual identity.
 
 ---
 
@@ -231,7 +231,7 @@ type RecipeType = {
   instructions?: string;
 };
 
-// A recipe with ingredient names and units resolved — used in the UI
+// A recipe with ingredient names and units resolved - used in the UI
 type RecipeWithIngredientsType = Omit<RecipeType, 'ingredients'> & {
   ingredients: Array<RecipeIngredientType & { name: string; unit: string }>;
 };
@@ -243,7 +243,7 @@ type RecipeWithIngredientsType = Omit<RecipeType, 'ingredients'> & {
 
 The app uses a hybrid state strategy: **TanStack React Query** for server state and **React `useState`** for local UI state.
 
-### Server State — React Query
+### Server State - React Query
 
 All data fetching and mutation logic lives in custom hooks under `src/hooks/`. These hooks wrap React Query's `useQuery` and `useMutation` primitives, exposing a clean and reusable interface to the rest of the UI.
 
@@ -252,24 +252,24 @@ useRecipes()          // Fetch all recipes
 useRecipe(id)         // Fetch a single recipe
 useIngredients()      // Fetch all ingredients
 
-useCreateRecipe()     // POST /api/recipes — invalidates recipe list cache
-useUpdateRecipe(id)   // PUT /api/recipes/:id — invalidates recipe + list
-useDeleteRecipe()     // DELETE /api/recipes/:id — with confirmation + toast
-useCreateIngredient() // POST /api/ingredients — with optimistic update
-useDeleteIngredient() // DELETE /api/ingredients/:id — handles 409 gracefully
+useCreateRecipe()     // POST /api/recipes - invalidates recipe list cache
+useUpdateRecipe(id)   // PUT /api/recipes/:id - invalidates recipe + list
+useDeleteRecipe()     // DELETE /api/recipes/:id - with confirmation + toast
+useCreateIngredient() // POST /api/ingredients - with optimistic update
+useDeleteIngredient() // DELETE /api/ingredients/:id - handles 409 gracefully
 ```
 
 **Key behaviours:**
 
-- **Cache invalidation** — After any mutation, the relevant query caches are automatically invalidated so the UI reflects the latest data without a manual page refresh.
-- **Optimistic updates** — `useCreateIngredient` updates the local cache immediately using a temporary placeholder ID, giving instant visual feedback. The cache is later reconciled once the server response confirms the new entry.
-- **Error boundaries** — All mutations catch errors and surface them as toast notifications, keeping the user informed without blocking the UI.
+- **Cache invalidation** - After any mutation, the relevant query caches are automatically invalidated so the UI reflects the latest data without a manual page refresh.
+- **Optimistic updates** - `useCreateIngredient` updates the local cache immediately using a temporary placeholder ID, giving instant visual feedback. The cache is later reconciled once the server response confirms the new entry.
+- **Error boundaries** - All mutations catch errors and surface them as toast notifications, keeping the user informed without blocking the UI.
 
-### Client State — React `useState`
+### Client State - React `useState`
 
 Form input values (recipe name, selected ingredient, quantity), drawer open/close state, pagination offsets, and search filter strings are all managed with `useState` local to each component. This keeps the components self-contained and avoids polluting the global state.
 
-## Unit and Integration Tests — Jest
+## Unit and Integration Tests - Jest
 
 | Test file                                        | Coverage                                               |
 | ------------------------------------------------ | ------------------------------------------------------ |
@@ -283,9 +283,9 @@ Form input values (recipe name, selected ingredient, quantity), drawer open/clos
 
 The test setup in `__tests__/test-utils.tsx` provides a shared wrapper with the React Query `QueryClient` provider pre-configured, making it straightforward to test components that rely on query hooks without needing to mock the entire library.
 
-## End-to-End Tests — Playwright
+## End-to-End Tests - Playwright
 
-E2E tests live in `e2e/` and run against the real Next.js dev server using a real Chromium browser. They exercise complete user flows from the browser's perspective — navigating, filling forms, clicking buttons, and asserting on visible outcomes.
+E2E tests live in `e2e/` and run against the real Next.js dev server using a real Chromium browser. They exercise complete user flows from the browser's perspective - navigating, filling forms, clicking buttons, and asserting on visible outcomes.
 
 | Test file                 | What it tests                                                                                         |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
@@ -304,7 +304,7 @@ Next.js was chosen for its support for server and client components, API route h
 
 ### Server vs. Client Components
 
-Server components are used for layouts and initial page renders. Client components (`"use client"`) are used only where interactivity is required — forms, drawers, tables with sorting/filtering. This boundary keeps JavaScript bundle sizes smaller and initial page loads faster.
+Server components are used for layouts and initial page renders. Client components (`"use client"`) are used only where interactivity is required - forms, drawers, tables with sorting/filtering. This boundary keeps JavaScript bundle sizes smaller and initial page loads faster.
 
 ### shadcn/ui
 
@@ -312,7 +312,7 @@ Rather than building a component library from scratch, shadcn/ui provides a set 
 
 ### TanStack React Query for Server State
 
-React Query was chosen over alternatives like SWR or a plain `useEffect` + `fetch` approach because it offers a rich feature set out of the box: automatic background refetching, cache invalidation, optimistic updates, and structured loading/error states — all without manual boilerplate.
+React Query was chosen over alternatives like SWR or a plain `useEffect` + `fetch` approach because it offers a rich feature set out of the box: automatic background refetching, cache invalidation, optimistic updates, and structured loading/error states - all without manual boilerplate.
 
 ### TanStack Table for Data Tables
 
@@ -320,11 +320,11 @@ Recipes and ingredients are displayed using TanStack Table, which provides imper
 
 ### Side Drawer for Forms
 
-Add and edit forms open in a side drawer rather than navigating to a separate page. This keeps the user in context — they can see the recipe or ingredient list in the background, and return to it instantly after saving. It avoids unnecessary routing overhead for what is fundamentally an overlay interaction.
+Add and edit forms open in a side drawer rather than navigating to a separate page. This keeps the user in context - they can see the recipe or ingredient list in the background, and return to it instantly after saving. It avoids unnecessary routing overhead for what is fundamentally an overlay interaction.
 
 ### Ingredient Deletion Guard (409 Conflict)
 
-The `DELETE /api/ingredients/:id` handler checks whether the ingredient is referenced by any recipe before deleting it. If it is, the server responds with `409 Conflict`. This prevents orphaned references in recipes and protects data integrity at the API boundary — not just at the UI level.
+The `DELETE /api/ingredients/:id` handler checks whether the ingredient is referenced by any recipe before deleting it. If it is, the server responds with `409 Conflict`. This prevents orphaned references in recipes and protects data integrity at the API boundary - not just at the UI level.
 
 ### Ingredient Pills in Detail View
 
@@ -332,7 +332,7 @@ Ingredients are rendered in a grid. This provides a dense, scannable summary of 
 
 ### `useRouter` vs. `next/link`
 
-`next/link` is used for all static navigation links (e.g. the navbar). `useRouter` is reserved for programmatic navigation — e.g. redirecting after form submission or navigating based on dynamic conditions — keeping the distinction between declarative and imperative navigation clear.
+`next/link` is used for all static navigation links (e.g. the navbar). `useRouter` is reserved for programmatic navigation - e.g. redirecting after form submission or navigating based on dynamic conditions - keeping the distinction between declarative and imperative navigation clear.
 
 ### Recommendation Engine
 
@@ -344,11 +344,11 @@ The ingredients page includes a Recipe Finder side panel powered by `getRecipesB
 
 ### Truncated Ingredient Badges (+N more)
 
-Recipe rows in the table display a maximum of four ingredient badges, with any overflow collapsed into a "+N more" badge. The previous design rendered every ingredient inline, which caused rows to expand unpredictably — recipes with many ingredients pushed the layout taller, created uneven row heights, and made scanning the list harder. Capping at four keeps rows visually consistent, reduces layout shift when data changes, and still gives users enough context to identify a recipe at a glance. The full ingredient list remains accessible on the recipe detail page.
+Recipe rows in the table display a maximum of four ingredient badges, with any overflow collapsed into a "+N more" badge. The previous design rendered every ingredient inline, which caused rows to expand unpredictably - recipes with many ingredients pushed the layout taller, created uneven row heights, and made scanning the list harder. Capping at four keeps rows visually consistent, reduces layout shift when data changes, and still gives users enough context to identify a recipe at a glance. The full ingredient list remains accessible on the recipe detail page.
 
 ### TypeScript Throughout
 
-TypeScript is used across the entire codebase — API handlers, hooks, utilities, and components. Shared type definitions in `/lib/types.ts` ensure that the data shape flowing through each layer is consistent and that type errors are caught at compile time rather than at runtime.
+TypeScript is used across the entire codebase - API handlers, hooks, utilities, and components. Shared type definitions in `/lib/types.ts` ensure that the data shape flowing through each layer is consistent and that type errors are caught at compile time rather than at runtime.
 
 ### Mobile-First Responsive Design
 
@@ -374,21 +374,21 @@ Light and dark themes are toggled from the header or by pressing `D`, powered by
 
 ## Assumptions
 
-- **Ingredient deletion should be guarded at the API level.** If an ingredient is still referenced by any recipe, the server responds with `409 Conflict` rather than silently deleting it and leaving orphaned references. This felt like the right default — data integrity should be enforced at the boundary, not rely on the UI preventing the action.
-- **Going beyond the minimum spec was intentional.** The brief asked for a recipes page and an ingredients page with basic CRUD. I chose to extend it with a recipe detail page, an edit drawer, recipe instructions, and a recommendation engine because these features demonstrate a more realistic product — and show how I think about user experience, not just checkbox requirements.
+- **Ingredient deletion should be guarded at the API level.** If an ingredient is still referenced by any recipe, the server responds with `409 Conflict` rather than silently deleting it and leaving orphaned references. This felt like the right default - data integrity should be enforced at the boundary, not rely on the UI preventing the action.
+- **Going beyond the minimum spec was intentional.** The brief asked for a recipes page and an ingredients page with basic CRUD. I chose to extend it with a recipe detail page, an edit drawer, recipe instructions, and a recommendation engine because these features demonstrate a more realistic product - and show how I think about user experience, not just checkbox requirements.
 - **A flat JSON file is sufficient for persistence.** Given the scope of the test, a proper database would add setup friction without meaningfully improving the evaluation. The JSON file keeps the project easy to clone and run while still demonstrating the API design patterns.
-- **Optimistic updates are appropriate for this kind of app.** Mutations (create, edit, delete) update the UI immediately and roll back on failure. This is a common pattern in modern apps and demonstrates understanding of React Query's cache management — but it does assume the happy path succeeds most of the time.
-- **The recommendation engine can be simple.** Counting shared ingredients between recipes is naive but effective for a small dataset. A production version might weight by category, prep time, or user history — but for this test, ingredient overlap is a reasonable signal.
+- **Optimistic updates are appropriate for this kind of app.** Mutations (create, edit, delete) update the UI immediately and roll back on failure. This is a common pattern in modern apps and demonstrates understanding of React Query's cache management - but it does assume the happy path succeeds most of the time.
+- **The recommendation engine can be simple.** Counting shared ingredients between recipes is naive but effective for a small dataset. A production version might weight by category, prep time, or user history - but for this test, ingredient overlap is a reasonable signal.
 
 ---
 
 ## Experience
 
-I enjoyed working on this test. The brief was clear and open-ended enough to allow creative decisions, which made it feel more like building a real product than ticking boxes. The recipe/ingredients domain is well-suited to demonstrating full-stack patterns — CRUD, relational data, search, filtering — without the problem feeling contrived.
+I enjoyed working on this test. The brief was clear and open-ended enough to allow creative decisions, which made it feel more like building a real product than ticking boxes. The recipe/ingredients domain is well-suited to demonstrating full-stack patterns - CRUD, relational data, search, filtering - without the problem feeling contrived.
 
 The parts I found most satisfying were the Recipe Finder panel (turning the ingredients table into an interactive discovery tool) and the recommendation engine (a small feature that adds genuine utility). Both went beyond what was strictly asked for, but they felt like natural extensions that a user would actually want.
 
-If I had more time, I'd add image uploads, user accounts, and proper database persistence — but within the scope of a take-home test, I'm happy with where it landed.
+If I had more time, I'd add image uploads, user accounts, and proper database persistence - but within the scope of a take-home test, I'm happy with where it landed.
 
 ---
 
@@ -396,19 +396,19 @@ If I had more time, I'd add image uploads, user accounts, and proper database pe
 
 The core architecture, system design, data model, and component structure were designed independently. AI assistance was used in a targeted way:
 
-- **Test setup** — Configuring Jest with Next.js and React Testing Library, including the initial `jest.config.ts` and `jest.setup.ts` boilerplate.
-- **Complex mocking** — Mocking React Query hooks and providers in the test environment is non-trivial. AI helped navigate some of the more subtle patterns required to mock `useQuery` return values correctly.
-- **Code review** — Used to review code for potential performance issues (unnecessary re-renders, missing memoisation) and edge cases that might have been overlooked.
-- **React Query boilerplate** — After providing a detailed pseudo-plan of the hook structure I wanted, AI helped scaffold the initial versions of `useRecipes` and `useIngredients`, which were then reviewed and refined manually.
-- **Test writing** — For test writing, I provided AI with the specific user flows and edge cases I wanted to verify — for example, CRUD operations on API route handlers and the 409 conflict when deleting an ingredient still used by a recipe. The generated drafts were then reviewed and adjusted to ensure correctness and completeness.
+- **Test setup** - Configuring Jest with Next.js and React Testing Library, including the initial `jest.config.ts` and `jest.setup.ts` boilerplate.
+- **Complex mocking** - Mocking React Query hooks and providers in the test environment is non-trivial. AI helped navigate some of the more subtle patterns required to mock `useQuery` return values correctly.
+- **Code review** - Used to review code for potential performance issues (unnecessary re-renders, missing memoisation) and edge cases that might have been overlooked.
+- **React Query boilerplate** - After providing a detailed pseudo-plan of the hook structure I wanted, AI helped scaffold the initial versions of `useRecipes` and `useIngredients`, which were then reviewed and refined manually.
+- **Test writing** - For test writing, I provided AI with the specific user flows and edge cases I wanted to verify - for example, CRUD operations on API route handlers and the 409 conflict when deleting an ingredient still used by a recipe. The generated drafts were then reviewed and adjusted to ensure correctness and completeness.
 
 ## Nice to haves that were not implemented
 
-- **Image uploads** — Allowing users to upload their own photos for recipes would make the app more personal and engaging.
-- **Bulk ingredient deletion** — Allowing users to select multiple ingredients and delete them in one action (with appropriate guards) would be a nice efficiency improvement for managing large ingredient lists.
-- **Bookmark Recipes** — Allow users to "favourite" or bookmark recipes for quick access later.
-- **User accounts** — Adding authentication and user-specific data would allow for a more personalised experience, with private recipe collections and ingredient lists.
-- **Shareable links** — Allow users to share recipes via unique URLs, making it easy to share with friends or on social media.
-- **Embed Video intructions** — Allow recipe instructions to include embedded videos (e.g. from YouTube) for more engaging, step-by-step guidance.
-- **Generate Description by AI models** — Use AI to generate a short description or summary for each recipe based on its ingredients and instructions, giving users a quick overview when browsing the list.
+- **Image uploads** - Allowing users to upload their own photos for recipes would make the app more personal and engaging.
+- **Bulk ingredient deletion** - Allowing users to select multiple ingredients and delete them in one action (with appropriate guards) would be a nice efficiency improvement for managing large ingredient lists.
+- **Bookmark Recipes** - Allow users to "favourite" or bookmark recipes for quick access later.
+- **User accounts** - Adding authentication and user-specific data would allow for a more personalised experience, with private recipe collections and ingredient lists.
+- **Shareable links** - Allow users to share recipes via unique URLs, making it easy to share with friends or on social media.
+- **Embed Video intructions** - Allow recipe instructions to include embedded videos (e.g. from YouTube) for more engaging, step-by-step guidance.
+- **Generate Description by AI models** - Use AI to generate a short description or summary for each recipe based on its ingredients and instructions, giving users a quick overview when browsing the list.
 - **Calories Calculator** - Integrate a calorie calculator that estimates the total calories of a recipe based on its ingredients and quantities, providing users with nutritional insights.
