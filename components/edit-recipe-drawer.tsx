@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Trash2 } from "lucide-react"
 import { toast } from "sonner"
@@ -42,6 +42,15 @@ export const EditRecipeDrawer = ({
   const [pendingDelete, setPendingDelete] = useState(false)
 
   const handleClose = () => onOpenChange(false)
+
+  // Move focus away from main content before the drawer applies aria-hidden,
+  // preventing the "Blocked aria-hidden on a focused element" browser warning.
+  useEffect(() => {
+    if (open) {
+      const el = document.activeElement as HTMLElement | null
+      el?.blur()
+    }
+  }, [open])
 
   return (
     <>

@@ -67,8 +67,7 @@ export default function RecipeDetailPage() {
             {recipe.name}
           </h1>
           <Button
-            onClick={(e) => {
-              ;(e.currentTarget as HTMLElement).blur()
+            onClick={() => {
               setDrawerOpen(true)
             }}
             className="h-12 w-full shrink-0 rounded-full border border-white/20 bg-white/15 px-6 text-base font-extrabold text-white backdrop-blur-md hover:bg-white/25 sm:w-auto"
